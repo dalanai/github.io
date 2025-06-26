@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI智能体助理实战课程</title>
+    <style>
+        /* 重置样式 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif; background: #0f2027; color: #fff; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        img { max-width: 100%; vertical-align: middle; }
+        a { text-decoration: none; color: inherit; }
+        ul, ol { list-style: none; }
+        
+        /* 布局样式 */
+        .container { max-width: 750px; margin: 0 auto; padding: 0 16px; }
+        .section { padding: 40px 0; }
+        .text-center { text-align: center; }
+        
+        /* 头部样式 */
+        .header { padding: 30px 0 20px; position: relative; overflow: hidden; }
+        .header-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(67,97,238,0.2) 0%, rgba(58,12,163,0.1) 70%, transparent 100%); z-index: -1; }
+        .title { font-size: 2.5rem; margin-bottom: 16px; background: linear-gradient(to right, #4cc9f0, #f72585); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: bold; letter-spacing: -0.5px; }
+        .tagline { font-size: 1.4rem; margin-bottom: 16px; font-weight: 500; }
+        .highlight { background: linear-gradient(120deg, rgba(76,201,240,0.3), transparent); padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+        
+        /* 按钮样式 */
+        .cta-button { display: inline-block; background: linear-gradient(to right, #f72585, #4361ee); color: white; padding: 14px 40px; font-size: 1.2rem; font-weight: bold; text-decoration: none; border-radius: 50px; margin: 20px 0; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(247, 37, 133, 0.4); }
+        
+        /* 统计卡片 */
+        .stats { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+        .stat-item { flex: 1; min-width: 45%; text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; margin-bottom: 10px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); }
+        .stat-item .icon { font-size: 2rem; margin-bottom: 10px; color: #4cc9f0; }
+        
+        /* 卡片样式 */
+        .cards-container { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
+        .card { background: rgba(255, 255, 255, 0.08); border-radius: 15px; padding: 20px; transition: transform 0.3s ease; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); }
+        .card:hover { transform: translateY(-8px); background: rgba(67, 97, 238, 0.15); }
+        .card h3 { font-size: 1.3rem; margin-bottom: 15px; color: #4cc9f0; display: flex; align-items: center; }
+        .card h3 .icon { margin-right: 10px; font-size: 1.5rem; }
+        .card ul { padding-left: 20px; }
+        .card li { margin-bottom: 10px; position: relative; padding-left: 15px; }
+        .card li:before { content: ""; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: #f72585; }
+        
+        /* 课程模块 */
+        .module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        .module-card { background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 18px; border-left: 4px solid #f72585; }
+        .module-card h4 { font-size: 1.1rem; margin-bottom: 10px; color: #4cc9f0; }
+        .module-card p { font-size: 0.9rem; opacity: 0.9; margin-bottom: 10px; }
+        
+        /* 项目卡片 */
+        .project-card { background: rgba(58, 12, 163, 0.2); border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(76, 201, 240, 0.3); }
+        .project-card h3 { font-size: 1.3rem; margin-bottom: 15px; color: #4cc9f0; }
+        .badge { display: inline-block; background: #f72585; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; margin-bottom: 10px; }
+        
+        /* 适合人群 */
+        .who-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        .who-item { background: rgba(76, 201, 240, 0.1); padding: 18px; border-radius: 12px; text-align: center; }
+        .who-item .icon { font-size: 2rem; color: #4cc9f0; margin-bottom: 10px; }
+        
+        /* 课程特色 */
+        .features { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+        .feature { text-align: center; padding: 20px; background: rgba(67, 97, 238, 0.1); border-radius: 15px; }
+        .feature .icon { font-size: 2.5rem; color: #f72585; margin-bottom: 15px; }
+        
+        /* 底部样式 */
+        .footer { background: rgba(0, 0, 0, 0.3); padding: 30px 0; text-align: center; margin-top: 40px; font-size: 0.9rem; }
+        
+        /* 图标字体 */
+        .icon { display: inline-block; }
+        .icon-robot:before { content: "🤖"; }
+        .icon-brain:before { content: "🧠"; }
+        .icon-cogs:before { content: "⚙️"; }
+        .icon-chart:before { content: "📈"; }
+        .icon-project:before { content: "📋"; }
+        .icon-grad:before { content: "🎓"; }
+        .icon-bolt:before { content: "⚡"; }
+        .icon-laptop:before { content: "💻"; }
+        .icon-diagram:before { content: "🔗"; }
+        .icon-industry:before { content: "🏭"; }
+        .icon-user:before { content: "👨‍💼"; }
+        .icon-bullhorn:before { content: "📢"; }
+        .icon-headset:before { content: "🎧"; }
+        .icon-teacher:before { content: "👩‍🏫"; }
+        
+        /* 媒体查询 */
+        @media (max-width: 480px) {
+            .title { font-size: 2rem; }
+            .tagline { font-size: 1.2rem; }
+            .module-grid, .who-container { grid-template-columns: 1fr; }
+            .stat-item { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部区域 -->
+    <header class="header">
+        <div class="header-bg"></div>
+        <div class="container text-center">
+            <h1 class="title">AI智能体助理实战课程</h1>
+            <p class="tagline">0基础打造AI定制助理，突破能力边界，<span class="highlight">1个人顶10个人</span></p>
+            <p>6节核心直播+4节实战项目讲解+2节干货加餐</p>
+            <a href="#enroll" class="cta-button">立即报名课程</a>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="icon icon-chart"></div>
+                    <h3>10倍效率</h3>
+                    <p>突破个人能力边界</p>
+                </div>
+                <div class="stat-item">
+                    <div class="icon icon-project"></div>
+                    <h3>4大实战</h3>
+                    <p>真实项目演练</p>
+                </div>
+                <div class="stat-item">
+                    <div class="icon icon-grad"></div>
+                    <h3>6+4+2</h3>
+                    <p>课程体系设计</p>
+                </div>
+                <div class="stat-item">
+                    <div class="icon icon-bolt"></div>
+                    <h3>0基础</h3>
+                    <p>无需编程经验</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 核心价值 -->
+    <section class="section">
+        <div class="container">
+            <h2 class="title text-center" style="margin-bottom:30px;">课程核心价值</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <h3><span class="icon icon-robot"></span> 智能体助理开发</h3>
+                    <ul>
+                        <li>从零打造AI定制助理，突破能力边界</li>
+                        <li>提示词优化：一个公式搞定90%的提示词</li>
+                        <li>零代码搭建AI对话智能体，放大工作价值</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="icon icon-brain"></span> 知识库赋能</h3>
+                    <ul>
+                        <li>为智能体搭载专业领域知识库</li>
+                        <li>3步搭建专业知识库，回答准确率98%</li>
+                        <li>无缝接入企业微信/飞书，打造24h金牌顾问</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3><span class="icon icon-cogs"></span> 工作流自动化</h3>
+                    <ul>
+                        <li>业务流程自动化，新人光速上岗</li>
+                        <li>工作流创建：5字口诀搭建法</li>
+                        <li>用户界面搭建：拖动鼠标完成设计</li>
+                        <li>批量化产出，从个体赋能团队进化</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 课程大纲 -->
+    <section class="section" style="background: rgba(0,0,0,0.2);">
+        <div class="container">
+            <h2 class="title text-center" style="margin-bottom:30px;">课程大纲</h2>
+            
+            <div class="module-grid">
+                <div class="module-card">
+                    <h4>第1课：智能体</h4>
+                    <p>0基础打造AI定制助理</p>
+                    <ul>
+                        <li>从人工智障到超级员工</li>
+                        <li>零代码搭建AI智能体</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h4>第2课：知识库</h4>
+                    <p>让AI更懂你的业务</p>
+                    <ul>
+                        <li>3步搭建专业知识库</li>
+                        <li>无缝接入企业微信/飞书</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h4>第3课：实战项目一</h4>
+                    <p>7 * 24小时AI智能客服</p>
+                    <ul>
+                        <li>适用于多行业</li>
+                        <li>提升客户满意度</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h4>第4课：工作流基础</h4>
+                    <p>业务流程自动化</p>
+                    <ul>
+                        <li>5字口诀搭建法</li>
+                        <li>拖动鼠标完成设计</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h4>第5课：工作流实战</h4>
+                    <p>AI营销爆款流水线</p>
+                    <ul>
+                        <li>突破流量增长瓶颈</li>
+                        <li>高效生成高质量内容</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h4>第6课：实战项目二</h4>
+                    <p>爆款小红书笔记</p>
+                    <ul>
+                        <li>适用品牌方/自媒体</li>
+                        <li>提升账号竞争力</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h4>第7课：工作流进阶</h4>
+                    <p>赋能团队进化</p>
+                    <ul>
+                        <li>实现批量化产出</li>
+                        <li>团队协作工作流</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h4>第8课：实战项目三</h4>
+                    <p>客户案例匹配</p>
+                    <ul>
+                        <li>识别对话关键词</li>
+                        <li>匹配解决方案库</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h4>第9课：工作台</h4>
+                    <p>商业变现闭环</p>
+                    <ul>
+                        <li>搭建专属AI工作台</li>
+                        <li>扩大品牌影响力</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h4>第10课：实战项目四</h4>
+                    <p>知识产品策划</p>
+                    <ul>
+                        <li>调研用户需求</li>
+                        <li>产出课程大纲</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 项目实战 -->
+    <section class="section">
+        <div class="container">
+            <h2 class="title text-center" style="margin-bottom:30px;">项目实战演练</h2>
+            
+            <div class="project-card">
+                <span class="badge">实战项目一</span>
+                <h3>7 * 24小时AI智能客服</h3>
+                <p><strong>适用场景：</strong>教育、金融、医疗、电商等行业</p>
+                <p><strong>解决方案：</strong>基于知识文档，7 * 24小时响应，回答准确率98%，降低人工成本，提升满意度</p>
+            </div>
+            
+            <div class="project-card">
+                <span class="badge">实战项目二</span>
+                <h3>爆款小红书笔记工作流</h3>
+                <p><strong>适用场景：</strong>品牌方、自媒体人</p>
+                <p><strong>实战目标：</strong>获取热门选题，生成高质量笔记，提升账号竞争力</p>
+            </div>
+            
+            <div class="project-card">
+                <span class="badge">实战项目三</span>
+                <h3>客户案例匹配</h3>
+                <p><strong>适用场景：</strong>销售、客服、运营</p>
+                <p><strong>实战目标：</strong>识别关键词，匹配解决方案，推荐成交话术</p>
+            </div>
+            
+            <div class="project-card">
+                <span class="badge">实战项目四</span>
+                <h3>知识型产品策划</h3>
+                <p><strong>适用场景：</strong>培训师、企业内训</p>
+                <p><strong>实战目标：</strong>调研用户需求，分析痛点，产出课程大纲</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 适合人群 -->
+    <section class="section" style="background: rgba(0,0,0,0.2);">
+        <div class="container">
+            <h2 class="title text-center" style="margin-bottom:30px;">适合谁学？</h2>
+            
+            <div class="who-container">
+                <div class="who-item">
+                    <div class="icon icon-user"></div>
+                    <h3>职场新人</h3>
+                    <p>快速提升工作效率，建立核心竞争力</p>
+                </div>
+                
+                <div class="who-item">
+                    <div class="icon icon-bullhorn"></div>
+                    <h3>营销人员</h3>
+                    <p>打造爆款内容生产流水线</p>
+                </div>
+                
+                <div class="who-item">
+                    <div class="icon icon-headset"></div>
+                    <h3>客服管理者</h3>
+                    <p>构建24小时智能客服系统</p>
+                </div>
+                
+                <div class="who-item">
+                    <div class="icon icon-teacher"></div>
+                    <h3>培训师</h3>
+                    <p>开发AI知识产品助手</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 报名区域 -->
+    <section class="section" id="enroll">
+        <div class="container">
+            <h2 class="title text-center" style="margin-bottom:30px;">课程特色</h2>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="icon icon-laptop"></div>
+                    <h3>零基础入门</h3>
+                    <p>无需编程经验，职场新人也能快速掌握</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="icon icon-diagram"></div>
+                    <h3>项目驱动学习</h3>
+                    <p>4大实战项目贯穿整个课程</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="icon icon-industry"></div>
+                    <h3>行业实战经验</h3>
+                    <p>开发了160+智能体的实战专家分享</p>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 40px;">
+                <h3 class="title" style="font-size:1.8rem;margin-bottom:25px;">立即开启你的AI赋能之旅</h3>
+                <a href="#" class="cta-button">马上报名课程</a>
+                <p style="margin-top: 20px; opacity: 0.8;">前50名报名学员赠送《智能体变现思路》加餐课</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2023 AI智能体助理实战课程 | 6节核心直播+4节实战项目讲解+2节干货加餐</p>
+            <p style="margin-top:10px;">课程咨询: contact@ai-agent-course.com | 电话: 400-123-4567</p>
+        </div>
+    </footer>
+</body>
+</html>
